@@ -65,7 +65,6 @@
                   <td><?php echo $data_bayar["bulan_spp"];?></td>
                   <td><?php echo $data_bayar["tahun_spp"];?></td>
                   <td>
-                  <a href="laporan_pemayaran.php?id_pembayaran=<?=$data_bayar['id_pembayaran']?>" class="btn btn-warning">cetak</a>
                       <a href="hapus_pembayaran.php?id_pembayaran=<?=$data_bayar['id_pembayaran']?>" class="btn btn-danger" onclick="return confirm('apakah anda yakin menghapus data ini?')">Delete</a>
                   </td> 
               </tr>

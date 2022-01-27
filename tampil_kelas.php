@@ -55,6 +55,8 @@
     ?>
   </tbody>
   </table>
+        <td><a href="tambah_kelas.php" class="btn btn-success">Tambah Kelas</a>
+        </tr>
     <?php
     ?>
   </tbody>

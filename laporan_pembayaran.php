@@ -1,86 +1,103 @@
-<?php
+<?php 
 session_start();
-if(isset($_SESSION['login'])){
-    include "koneksi.php";
+if(isset($_SESSION['status_login']) ) {
+	include 'koneksi.php';
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Laporan Pembayaran SPP</title>
-    <style type="text/css">
-        body{
-            font-family: Arial;
-        }
-        @media print{
-            .no-print{
-                display: none;
-            }
-        }
-        table{
-            border-collapse: collapse;
-        }
-    </style>
+	<title>Laporan Pembayaran</title>
+	
+	<style >
+      body{
+        background-image: url("https://lh3.googleusercontent.com/-gKp7i66veso/WQjZZfGmiFI/AAAAAAAADto/UsCmjfss6X0_x14lEBeSbCrC1KEpTR0RwCHM/s1600/wallpaper%252Bputih%252B%2Ball-white-wallpaper-0.jpg");
+        background-repeat:no-repeat;
+        background-size:cover;
+      }
+		body{
+			font-family: arial;
+		}
+		.print{
+			margin-top: 10px;
+		}
+		@media print{
+			.print{
+				display: none;
+			}
+		}
+		table{
+			border-collapse: collapse;
+		}
+	</style>
 </head>
 <body>
-<h3>Laporan Pembayaran SPP</h3>
-<hr/>
-<table width="100%" border="1" cellspacing="0" cellpadding="4">
-    <tr>
-        <th>No.</th>
-        <th>NIS</th>
-        <th>Nama Siswa</th>
-        <th>Kelas</th>
-        <th>No. Bayar</th>
-        <th>Tanggal</th>
-        <th>Lunas</th>
-        <th>Keterangan</th>
-    </tr>
-    <?php
-    $sqlSiswa = mysqli_query($koneksi, "SELECT spp.*,siswa.nis,siswa.namasiswa,siswa.kelas FROM spp INNER JOIN siswa ON spp.idsiswa=siswa.idsiswa WHERE tglbayar BETWEEN '$_GET[tgl1]' AND '$_GET[tgl2]' ORDER BY nobayar ASC");
-    $no=1;
-    $total = 0;
-    while($d=mysqli_fetch_array($sqlSiswa)){
-        echo "<tr>   
-            <td align='center'>$no</td>
-            <td align='center'>$d[nis]</td>
-            <td>$d[namasiswa]</td>
-            <td align='center'>$d[kelas]</td>
-            <td align='center'>$d[nobayar]</td>
-            <td>$d[bulan]</td>
-            <td align='right'>$d[jumlah]</td>
-            <td>$d[ket]</td>
-        </tr>";
-        $no++;
-        $total += $d['jumlah'];
-    } 
-    ?>
-    <tr>
-        <td colspan="6" align="right">Total</td>
-        <td align="right"><b><?php echo $total; ?></b></td>
-        <td></td>
-    </tr>
+	<h3>SMK SHANDY PUTRA MALANG<b><br/>LAPORAN PEMBAYARAN SPP</b></h3>
+	<br/>
+	<hr/>
+	Tanggal <?= $_GET['tgl1']." -- ".$_GET['tgl2'];  ?>
+	<br/>
+	<br>
+	<table border="1" cellspacing="" cellpadding="4" width="100%">
+	<tr>
+		<th>NO</th>
+		<th>NISN</th>
+		<th>NIS</th>
+		<th>NAMA SISWA</th>
+		<th>KELAS</th>
+		<th>PEMBAYARAN BULAN</th>
+        <th>PEMBAYARAN Tahun</th>
+		
+	</tr>
+	<?php 
+	$pembayaran = $koneksi -> query("SELECT siswa.nisn,siswa.nis,siswa.nama, kelas.nama_kelas , pembayaran.bulan_spp,pembayaran.tahun_spp
+							FROM pembayaran INNER JOIN siswa ON siswa.nisn=pembayaran.nisn
+                            JOIN kelas ON kelas.id_kelas = siswa.id_kelas 
+							WHERE tgl_bayar BETWEEN '$_GET[tgl1]' AND '$_GET[tgl2]'
+							");
+                            
+	$i=1;
+	$total = 0;
+	while($dta=mysqli_fetch_array($pembayaran)) :
+	 ?>
+	<tr>
+		<td align="center"><?= $i ?></td>
+		<td align="center"><?= $dta['nisn'] ?></td>
+		<td align="center"><?= $dta['nis'] ?></td>
+		<td align=""><?= $dta['nama'] ?></td>
+		<td align=""><?= $dta['nama_kelas'] ?></td>
+		<td align=""><?= $dta['bulan_spp'] ?></td>
+        <td align=""><?= $dta['tahun_spp'] ?></td>
+		
+	</tr>
+	<?php $i++; ?>
+	
+
+<?php endwhile; ?>
+
+	</table>
+<table width="100%">
+	<tr>
+		<td></td>
+		<td width="200px">
+			<BR/>
+			<p>Malang , <?= date('d/m/y') ?> <br/>
+				Admin,
+			<br/>
+			<br/>
+			<br/>
+		<p>____</p>
+		</td>
+	</tr>
 </table>
 
-<table width="100%">
-    <tr>
-        <td></td>
-        <td width="200px">
-            <p>Smk Telkom Malang, <?php echo date('d/m/Y'); ?><br/>
-            <h1 class="normal">Selamat Datang <?=$_SESSION['nama_petugas']?></h1></p>
-            <br/>
-            <br/>
-            <p>________</p>
-        </td>
-    </tr>
-</table>
-<a href="#" onclick="window.print();">Print</a>
+
+	<a  href="#" onclick="window.print();"><button class="print">CETAK</button></a>
 </body>
 </html>
 
 
-<?php
-}else{
-    header('location:index.php');
+<?php 
+} else {
+	header("location : login.php");
 }
 ?>

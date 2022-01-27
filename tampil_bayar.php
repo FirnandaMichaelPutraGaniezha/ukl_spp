@@ -4,19 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
     <title>Pembayaran</title>
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-F3w7mX95PdgyTmZZMECAngseQB83DfGTowi0iMjiWaeVhAn4FJkqJByhZMI3AhiU" crossorigin="anonymous">
 </head>
 <body>
-<style>
+    <style>
       body{
         background-image: url("https://lh3.googleusercontent.com/-gKp7i66veso/WQjZZfGmiFI/AAAAAAAADto/UsCmjfss6X0_x14lEBeSbCrC1KEpTR0RwCHM/s1600/wallpaper%252Bputih%252B%2Ball-white-wallpaper-0.jpg");
         background-repeat:no-repeat;
         background-size:cover;
       }
     </style>
+    
     <?php
         include "navbar.php";
         include "koneksi.php";
@@ -24,10 +24,10 @@
         $data_bayar = mysqli_fetch_array($query_bayar);
     ?>
     <br></br>
+    <br></br>
     <div class="container">
-        <div class="card">
-            <h1 class="card-header">Bayar SPP</h1>
-            <div class="card-body">
+    <h1 class= "text-center">Data Petugas</h1>
+        <table class="table table-light table-striped">
                 <form method="POST" action="proses_bayar.php">
                     <input type="hidden" name="nisn" value="<?=$data_bayar['nisn']?>">
                     <div class="mb-3">
@@ -36,7 +36,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="id_petugas" class="form-label">Id Petugas</label>
-                        <input type="text" class="form-control" name="id_petugas" value="<?=$data_bayar['id_petugas']?>">
+                        <input type="text" class="form-control" name="id_petugas" value="<?=$data_bayar['id_petugas']?>" >
                     </div>
                     <div class="mb-3">
                         <label for="tgl_bayar" class="form-label">Tanggal Bayar</label>
