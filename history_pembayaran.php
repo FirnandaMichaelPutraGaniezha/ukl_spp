@@ -25,8 +25,6 @@
     <div class="container">
     <h1 class= "text-center">History</h1>
         <table class="table table-light table-striped">
-    <form action="tampil_bayar.php" method="POST">
-            <input type="text" name="cari" class="form-control" placeholder="Masukkan Keyword Pencarian">
         </form>
             <table class="table table-light table-striped"> 
         <thead>
